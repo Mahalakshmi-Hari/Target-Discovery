@@ -34,10 +34,12 @@ browser. Press `Ctrl+C` in the terminal to stop the server.
 
 ## Data loading
 
-The app first loads files from the included `data` directory, so it works when
-deployed to Streamlit Community Cloud and does not depend on a local Windows
-path. When the bundled candidate CSV is absent, it falls back to the original
-OneDrive data directory on the developer's machine.
+The app first loads files from an included `data` directory or the repository
+root, so it works when deployed to Streamlit Community Cloud and does not
+depend on a local Windows path. When neither location contains the candidate
+CSV, it falls back to the original OneDrive data directory on the developer's
+machine. Supporting both layouts lets the dashboard run from either a
+`data/` subfolder or a flat repository containing the files alongside `app.py`.
 
 Use the sidebar uploader to upload one or more CSVs. Uploaded files replace the
 matching default dataset by filename. Recognized dataset names include
@@ -69,9 +71,9 @@ classification pie chart.
 ## Create a shareable Streamlit Community Cloud URL
 
 1. Create a **public GitHub repository** for this dashboard.
-2. Upload the contents of this `obesity_dashboard` folder to the repository
-   root, including `app.py`, `requirements.txt`, `obesity_target_logo.svg`,
-   and the `data` folder. Only publish these files if you are comfortable
+2. Upload `app.py`, `requirements.txt`, `obesity_target_logo.svg`, and the
+   supplied data files. The files may be placed in the repository root or in
+   its `data` folder. Only publish these files if you are comfortable
    making the included gene evidence and analysis outputs public.
 3. Sign in to [Streamlit Community Cloud](https://share.streamlit.io/) with the
    GitHub account that owns the repository.

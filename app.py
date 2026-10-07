@@ -31,6 +31,8 @@ LOCAL_DATA_ROOT = Path(
 DATA_ROOT = (
     BUNDLED_DATA_ROOT
     if (BUNDLED_DATA_ROOT / "candidate_genes_union_434.csv").is_file()
+    else APP_DIR
+    if (APP_DIR / "candidate_genes_union_434.csv").is_file()
     else LOCAL_DATA_ROOT
 )
 WORKBOOK_NAME = "Obesity_Top50_Gene_Target_Discovery_ClawBio.xlsx"
@@ -45,6 +47,8 @@ LOCAL_WORKBOOK_PATH = (
 WORKBOOK_PATH = (
     BUNDLED_DATA_ROOT / WORKBOOK_NAME
     if (BUNDLED_DATA_ROOT / WORKBOOK_NAME).is_file()
+    else APP_DIR / WORKBOOK_NAME
+    if (APP_DIR / WORKBOOK_NAME).is_file()
     else LOCAL_WORKBOOK_PATH
 )
 GO_TABLES_DIR = (
@@ -65,7 +69,10 @@ def go_table_path(name: str, legacy_name: str) -> Path:
         return bundled_path
     if source_path.is_file():
         return source_path
-    return BUNDLED_DATA_ROOT / legacy_name
+    root_path = APP_DIR / name
+    if root_path.is_file():
+        return root_path
+    return DATA_ROOT / legacy_name
 
 DATASETS: dict[str, tuple[str, Path]] = {
     "candidates": (
